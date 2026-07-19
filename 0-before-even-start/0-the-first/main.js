@@ -69,7 +69,32 @@ scene.add(cowBox);
 
 // add sun
 const sunTexture = new THREE.TextureLoader().load("sun.jpg");
-const sun = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), new THREE.MeshStandardMaterial({map: sunTexture}));
+const sunBump = new THREE.TextureLoader().load("pattern.png");
+const sun = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 32, 32),
+    new THREE.MeshStandardMaterial({map: sunTexture, normalMap: sunBump})
+);
+scene.add(sun);
+
+//page scroll
+sun.position.z = 30;
+sun.position.setX(-10);
+
+function moveCamera() {
+    const t = document.body.getBoundingClientRect().top;
+    sun.rotation.x += 0.05;
+    sun.rotation.y += 0.075;
+    sun.rotation.z += 0.05;
+
+    cowBox.rotation.y += 0.01;
+    cowBox.rotation.z += 0.01;
+
+    camera.position.z = t * -0.01;
+    camera.position.x = t * -0.0002;
+    camera.position.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
 
 //instead of direct rendering over and over:
 function animate() {
