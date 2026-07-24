@@ -58,3 +58,37 @@ import * as THREE from 'three'
       }
     </script>
   ```
+
+## Basics in a ThreeJs project
+- scene 
+```js
+const scene = new THREE.Scene();
+```
+- item geometry
+```js
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); 
+```
+- item material
+```js
+const cubeMaterial = new THREE.MeshBasicMaterial({color: "green"});
+```
+- item mesh
+```js
+const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+```
+- add item to the scene
+```js
+scene.add(cubeMesh);
+```
+- add camera
+```js
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 30);
+```
+- add canvas
+```html
+<canvas class="threejs"></canvas>
+```
+- add renderer 
+```js
+const renderer = new THREE.WebGLRenderer({canvas});
+```
