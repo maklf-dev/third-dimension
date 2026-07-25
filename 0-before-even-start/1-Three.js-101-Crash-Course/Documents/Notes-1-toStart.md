@@ -92,3 +92,11 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 ```js
 const renderer = new THREE.WebGLRenderer({canvas});
 ```
+- set renderer size
+```js
+renderer.setSize(window.innerWidth, window.innerHeight);
+```
+- render canvas, scene and camera
+```js
+renderer.render(scene, camera);
+```
