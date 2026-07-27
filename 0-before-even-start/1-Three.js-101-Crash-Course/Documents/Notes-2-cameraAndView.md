@@ -67,3 +67,21 @@ const renderLoop = () => {
 
 renderLoop();
 ```
+
+## Orthographic Camera
+- despite perspective camera, it does not have any perspective. it shows the size of object as they are, regardless of how far are they from camera. 
+
+![Orthographic Vs Perspective](orthographicAndPerspective.png)
+
+- in this type of camera, instead of fov, we have a square and for that, camera gets left, right, top, and bottom sizes. 
+
+```js
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 200);
+```
+
+- with this dimensions, it tells the renderer to render and square with 1*1 dimensions. but because we render it in desktop or mobile browser and these devices doesn't have 1/1 aspect ration, the result might be stretched. so to fix that, we multiply left and right by window aspect ratio:
+
+```js
+const aspectRatio = window.innerWidth / window.innerHeight;
+const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 200);
+```

@@ -12,15 +12,18 @@ const scene = new THREE.Scene();
 // create cube geometry: a simple cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 // create material : just color for now
-const cubeMaterial = new THREE.MeshBasicMaterial({color: "green"});
+const cubeMaterial = new THREE.MeshBasicMaterial({color: "orange"});
 
 //create new item and pass geometry and material
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 scene.add(cubeMesh); // add the item to the scene
 
-/*create a camera and pass field of view, aspect ratio(window.innerWidth / window.innerHeight), near (anything closest than that distance you will not see), far (anything further than that distance you will not see too)*/
-const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+const aspectRatio = window.innerWidth / window.innerHeight;
+
+// to create an orthographic camera
+const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 200);
+
 // change the camera position; move it back in z axis
 camera.position.z = 5;
 
