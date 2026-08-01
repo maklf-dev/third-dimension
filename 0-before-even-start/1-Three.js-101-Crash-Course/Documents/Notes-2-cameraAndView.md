@@ -85,3 +85,98 @@ const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 200);
 const aspectRatio = window.innerWidth / window.innerHeight;
 const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 200);
 ```
+
+## Resize
+- in out project, we set size once in codes:
+```js
+renderer.setSize(window.innerWidth, window.innerHeight);
+```
+so if after running for first time, if we change the size of browser, either blank space adds to page(when gets bigger) or the scene gets cut in(when gets smaller)
+
+- for fixing it, we can add set size to render loop, so it gets updated every frame:
+```js
+const renderLoop = () => {
+    // set the size of renderer(canvas) to the browser page
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+```
+but we still have size problem. because now when user resize the browser, the canvas updates correctly, but the camera aspect ratio we set is still setting once:
+```js
+const aspectRatio = window.innerWidth / window.innerHeight;
+
+const camera = new THREE.PerspectiveCamera(35, aspectRatio, 0.1, 200);
+```
+so the browser gets resized, the canvas gets updated but the camera still having the same ratio we passed to it, so it tries to fit that old ratio to new sizes, and it make out objects deformed.
+
+- based on [Three.js documents](https://threejs.org/docs/pages/PerspectiveCamera.html#isPerspectiveCamera):
+```
+.isPerspectiveCamera : boolean (readonly)
+```
+so we can not just pass the camera or update it later in code, or in render loop
+
+- but we can update and change a property named **.aspect : number**:
+```js
+const renderLoop = () => {
+    //update the camera ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+```
+- and again base on [Three.js documents](https://threejs.org/docs/pages/PerspectiveCamera.html#isPerspectiveCamera):
+```js
+.updateProjectionMatrix()
+
+// Updates the camera's projection matrix. Must be called after any change of camera properties.
+```
+so the item in page stays in the same ratio in resizing
+
+- but we still have a problem! because now we reset those size settings in every frame, even if not needed.
+- so instead of that, we add **resize event listener** and put them inside that:
+```js
+window.addEventListener("resize", () => {
+    //update the camera ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+    //updates the camera Matrix
+    camera.updateProjectionMatrix();
+    // set the size of renderer(canvas) to the browser page
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+```
+and now, resize settings gets called and updated only when needed.
+
+## Aliasing
+- line and shapes get render on display, on **pixels**. each pixel is a small square. so when we have a strait horizontal/vertical line, it exactly matches the edge of row of square and we have no problem. but when we have a tilted line, in rendering it becomes a  staircase pattern with pointy edges. 
+
+![Aliasing](aliasing.gif)
+
+- to solving this problem, we have both **Hardware** and **Software** solution. 
+    - **Hardware Solution:** like what happens in *Retina Screen*, we can put more pixels in the same place, so human eye cannot distinguish the edges. to provide higher *pixel ratio*. [Steve Jobs explains about Retina Screen](https://www.youtube.com/watch?v=kcnKi7GxZ2k)
+
+    - **Software Solution:** to start to shade the edge pixels with slightly different(lighter) color to create gradient like effect. so the software creates an illusion of softer line.
+
+![Software Anti Aliasing](aliased-shading.png) 
+
+- both of these solution make the shapes and lines smoother and softer. these called **Anti Aliasing (AA)**.
+
+![antiAliasing](antiAliasing.jpg)
+
+- we can use some tools to use AA in our project and make softer lines in our shapes when rendering.
+
+### Anti Aliasing (AA)
+**Hardware**
+- we can set the renderer pixel aspect ratio to the device with this:
+```js
+renderer.setPixelRatio(window.devicePixelRatio);
+```
+so if the device had more than 1, use that to handle the antilles with hardware. 
+- because there may be devices with much higher pixel Ratio, it's better to use this instead:
+```js
+const maxPixelRatio = Math.min(window.devicePixelRatio, 2);
+renderer.setPixelRatio(maxPixelRatio);
+```
+so we have a limit on it.
+
+**Software**
+- we can simply use the ThreeJs antialias tool to fix this problem:
+```js
+const renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+```
