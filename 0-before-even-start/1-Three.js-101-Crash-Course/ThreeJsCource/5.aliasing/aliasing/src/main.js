@@ -32,11 +32,17 @@ camera.position.z = 5;
 const canvas = document.querySelector("canvas.threejs");
 
 // create a new renderer and pass canvas to it
-const renderer = new THREE.WebGLRenderer({canvas: canvas});
+const renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
 /*const renderer = new THREE.WebGLRenderer({canvas});  // it also can be this way */
+
+// to set the pixel ratio and limit it up to 2
+const maxPixelRatio = Math.min(window.devicePixelRatio, 2);
+renderer.setPixelRatio(maxPixelRatio);
 
 // to create orbit controls
 const controls = new OrbitControls(camera, canvas);
+
+//console.log(window.devicePixelRatio); //to get the device pixel ration
 
 controls.enableDamping = true; // add smooth orbiting
 controls.autoRotate = true; // active auto rotation ** need to add controls.update(); too renderLoop
