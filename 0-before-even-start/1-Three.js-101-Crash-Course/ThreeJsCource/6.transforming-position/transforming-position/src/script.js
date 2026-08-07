@@ -18,8 +18,12 @@ cubeMesh.position.x = -5
 cubeMesh.position.z = -0.5
 
 //changing the position with vector3 method
-const newYPosition = new THREE.Vector3(0,5,0);
+const newYPosition = new THREE.Vector3(0,2,0);
 cubeMesh.position.copy(newYPosition)
+
+//change the object scale
+cubeMesh.scale.z = 2
+cubeMesh.scale.set(2,1.5,0.2)
 
 //add axis helper 
 const axesHelper = new THREE.AxesHelper(10);
