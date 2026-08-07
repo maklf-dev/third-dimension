@@ -53,3 +53,13 @@ scene.add(axesHelper)
     ```js
     cubeMesh.position.distanceTo(camera.position)
     ```
+
+#### **transforming scale**
+- we can change the scales of item in `x,y,z` axis with `.scale`:
+```js
+cubeMesh.scale.z = 2
+```
+- and also change all the axis scale with `set()`:
+```js
+cubeMesh.scale.set(2,1.5,0.2)
+```
