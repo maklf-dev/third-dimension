@@ -33,7 +33,7 @@ it provides a language to talk to GPU and instruct it on what to render
 - [ThreeJS GitHub Repo](https://github.com/mrdoob/three.js/tree/master)
 
 ## ThreeJs Fundamentals
-![ThreeJs Fundamentals](imgs\ThreeJsFundamentals.png)
+![ThreeJs Fundamentals](./imgs/ThreeJsFundamentals.png)
 ### Hierarchy
 
 - **Scene**

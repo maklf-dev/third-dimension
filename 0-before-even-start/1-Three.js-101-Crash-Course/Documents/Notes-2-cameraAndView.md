@@ -71,7 +71,7 @@ renderLoop();
 ## Orthographic Camera
 - despite perspective camera, it does not have any perspective. it shows the size of object as they are, regardless of how far are they from camera. 
 
-![Orthographic Vs Perspective](imgs\orthographicAndPerspective.png)
+![Orthographic Vs Perspective](./imgs/orthographicAndPerspective.png)
 
 - in this type of camera, instead of fov, we have a square and for that, camera gets left, right, top, and bottom sizes. 
 
@@ -146,18 +146,18 @@ and now, resize settings gets called and updated only when needed.
 ## Aliasing
 - line and shapes get render on display, on **pixels**. each pixel is a small square. so when we have a strait horizontal/vertical line, it exactly matches the edge of row of square and we have no problem. but when we have a tilted line, in rendering it becomes a  staircase pattern with pointy edges. 
 
-![Aliasing](imgs\aliasing.gif)
+![Aliasing](./imgs/aliasing.gif)
 
 - to solving this problem, we have both **Hardware** and **Software** solution. 
     - **Hardware Solution:** like what happens in *Retina Screen*, we can put more pixels in the same place, so human eye cannot distinguish the edges. to provide higher *pixel ratio*. [Steve Jobs explains about Retina Screen](https://www.youtube.com/watch?v=kcnKi7GxZ2k)
 
     - **Software Solution:** to start to shade the edge pixels with slightly different(lighter) color to create gradient like effect. so the software creates an illusion of softer line.
 
-![Software Anti Aliasing](imgs\aliased-shading.png) 
+![Software Anti Aliasing](./imgs/aliased-shading.png) 
 
 - both of these solution make the shapes and lines smoother and softer. these called **Anti Aliasing (AA)**.
 
-![antiAliasing](imgs\antiAliasing.jpg)
+![antiAliasing](./imgs/antiAliasing.jpg)
 
 - we can use some tools to use AA in our project and make softer lines in our shapes when rendering.
 
