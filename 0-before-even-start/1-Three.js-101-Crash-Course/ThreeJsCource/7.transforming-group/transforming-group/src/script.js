@@ -17,6 +17,9 @@ cubeMesh2.position.set(2,2,2)
 const cubeMesh3 = new THREE.Mesh(cubeGeometry3, cubeMaterial3);
 cubeMesh3.position.set(-2,-2,-2)
 
+//add rotation
+cubeMesh.rotation.x = Math.PI;
+
 //create a group of items
 const group = new THREE.Group();
 group.add(cubeMesh);
@@ -24,24 +27,11 @@ group.add(cubeMesh2);
 group.add(cubeMesh3);
 
 //apply changes to group
-group.scale.set(2,1.5,3.5)
+//group.scale.set(2,1.5,3.5)
 
 //append the new item to the scene
 //scene.add(cubeMesh);
 scene.add(group)
-
-//change the positions of the cube
-/*cubeMesh.position.y = 1
-cubeMesh.position.x = -5
-cubeMesh.position.z = -0.5
-
-//changing the position with vector3 method
-const newYPosition = new THREE.Vector3(0,2,0);
-cubeMesh.position.copy(newYPosition)
-
-//change the object scale
-cubeMesh.scale.z = 2
-cubeMesh.scale.set(2,1.5,0.2)*/
 
 //add axis helper 
 const axesHelper = new THREE.AxesHelper(10);
