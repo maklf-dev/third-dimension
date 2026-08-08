@@ -107,3 +107,52 @@ cubeMesh3.add(axesHelper3);
 ```
 
 ![addAxesHelperToMesh](./imgs/axesHelperToItem.png)
+
+## rotation
+- like position and scale, we also have `rotation` in item properties. but despite position or scale that have value with type `number`, the type of rotation is `Euler`.
+- **Euler** is a way to describe the rotation to an object base on its axis : `(x, y, z, order)` like `(0, 1, 1.57, 'XYZ')`
+- **Quaternion** is also another way to express rotation, but more complex. we will talk about it later.
+
+- the unit of of rotation is `radian`
+- to convert radian and degree to each other, this is the formula:
+```
+rad × 180/π = degree
+```
+- so base of that we have:
+```
+πrad/2 * 180/π = 90 °
+πrad * 180/π = 180 °
+2πrad * 180/π = 360 °
+```
+- so when we want to make a whole rotation(360deg) we can simply use this:
+```js
+cubeMesh.rotation.x = Math.PI * 0.5; // 90deg
+cubeMesh.rotation.x = Math.PI;       // 180deg
+cubeMesh.rotation.x = Math.PI * 2;   // 360deg
+```
+
+- and also we can use the threejs utility:
+```js
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(45); //45deg
+```
+
+- in euler system, bu default the threejs renders changes in `xyz` order, no matter in which order we add them in out project, so both of these have the same result:
+```js
+//1
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(90);
+cubeMesh.rotation.y = THREE.MathUtils.degToRad(45);
+
+//2
+cubeMesh.rotation.y = THREE.MathUtils.degToRad(90);
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(45);
+```
+- to change that default order, we can simply reorder them in out mesh:
+```js
+cubeMesh.rotations.reorder('YXZ');
+```
+- be careful that call reorder *before* rotating the mesh. 
+```js
+cubeMesh.rotations.reorder('YXZ');
+cubeMesh.rotation.y = THREE.MathUtils.degToRad(90);
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(45);
+```
