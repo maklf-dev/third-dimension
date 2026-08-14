@@ -119,3 +119,81 @@ scene.add(extrude)
 ![TextureExplanationSample](./imgs/textureExplanation.webp)
 
 - the material defines the skin color, light reflection, how matt it is. 
+
+#### **Material Types**
+- Material has different properties such as *roughness*, *reflectiveness*, *shininess*, *matt amount* etc.
+- These properties all respond to **Light**.
+- till now, we did not use any light in our samples and all shapes has solid color which looks the same at all angles and has no respond to the light. that's because we have two type of materials in threejs:
+    - **None-Environment Reacting Material**
+        - Mesh Basic Material
+        - Mesh Matcap Material
+        - Mesh Depth Material
+    - **Environment Reacting Material**
+        - Mesh Lambert Material
+        - Mesh Phong Material 
+        - Mesh Standard Material 
+        - Mesh Physical Material 
+            - ( from top to bottom, **Graphical Accuracy** increases. first one looks more fake and the last one look more realistic. ) 
+
+![MeshMaterialTypes](./imgs/MaterialTypes.png)
+
+- different material can coexist in a scene, so we can have a material that responds to light and  an environment that doesn't respond to the light. it may physically inaccurate, but depend on the context of the project, we can use both type in the scene at the same time. 
+
+#### **MeshBasicMaterial**
+
+```js
+const objectMaterial = new THREE.MeshBasicMaterial({})
+```
+
+- there are different properties we can set in this type of material:
+    - `color: "blue"` //can use any type of color like hex, rgb, name etc.
+    - `transparent: true` //need this structure to apply correctly:
+
+        ```js
+        const objectMaterial = new THREE.MeshBasicMaterial({
+            color: "red",
+            transparent: true,
+            opacity: 0.4
+        }) // to see the change, we need something else like another mesh
+        ```
+        ![BasicMaterialTransparentSample](./imgs/basicTransparentSample.png)
+        - we also can change properties of an mesh, after creating it with methods:
+
+        ```js
+        objectMaterial.transparent = true;
+        objectMaterial.opacity = 0.5;
+        ```
+        - color property is an exception. so for changing the color after creating a mesh, we use this:
+
+        ```js
+        objectMaterial.color = new THREE.Color("green")
+        ```
+    - `side`: for a **PlaneGeometry**, we need to add sides. because in threejs by default, item has one side and if we add a plane to the scene, and turn the camera, it got disappeared. so we can add the other side like this:
+
+    ```js
+    objectMaterial.side = THREE.DoubleSide;
+    //OR
+    objectMaterial.side = 2;
+    ```
+
+    - `fog`:  define a linear fog that grows linearly denser with the distance.
+
+        ```js
+        const fog = new THREE.Fog("color", near, far);
+        scene.fog = fog;
+        ```
+        - to see the fog better and use it properly, its better that the color of the fog and background be same.
+
+        ![FogSampleBlack](./imgs/fogSampleBlack.png)
+    
+    - `background`: this one actually is a scene property:
+
+    ```js
+    scene.background = new THREE.Color('#FFF0F5')
+    ```
+    ![FogWithDifferentBgColor](./imgs/fogWithDiffrentBgColor.png)
+
+#### **MeshDepthMaterial**
+- A material for drawing geometry by depth. Depth is based off of the camera near and far plane. White is nearest, black is farthest.
+
+![MeshDepthMaterialSample](./imgs/MeshDepthMaterialSample.png)
