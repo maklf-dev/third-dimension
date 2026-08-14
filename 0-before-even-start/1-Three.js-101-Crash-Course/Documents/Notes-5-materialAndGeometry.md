@@ -61,3 +61,54 @@
     - array : the list of the vertex (Float32Array)
     - itemSize : the number of axis we have, so it knows how many numbers must be in each group when separate them (3)
     - normalize : 
+
+### Primitives
+- there is some primitive shapes that we can use and adjust them to add them to the scene:
+    - BoxGeometry
+    - CapsuleGeometry
+    - CircleGeometry
+    - ConeGeometry
+    - DodecahedronGeometry
+    - ExtrudeGeometry
+    - IcosahedronGeometry
+    - LatheGeometry
+    - OctahedronGeometry
+    - PlaneGeometry
+    - RingGeometry
+    - ShapeGeometry
+    - SphereGeometry
+    - TetrahedronGeometry
+    - TorusGeometry
+    - TorusKnotGeometry
+    - TubeGeometry
+    - CylinderGeometry
+
+- for some of them, we just need to create `Geometry` and `Material`, `Mesh` them and add to the scene. for example:
+
+```js
+//ConeGeometry
+const coneGeometry = new THREE.ConeGeometry(4, 22, 20);
+const coneMaterial = new THREE.MeshBasicMaterial({color:"DarkRed", wireframe: true});
+const cone = new THREE.Mesh(coneGeometry, coneMaterial);
+scene.add(cone);
+```
+
+- but for some of them, we need to set more setting before adding to the set:
+
+```js
+//ExtrudeGeometry
+const extrLength = 12, extrWidth = 8;
+const extrShape = new THREE.Shape();
+extrShape.moveTo(0,0);
+extrShape.lineTo(0, extrWidth);
+extrShape.lineTo(extrLength,extrWidth);
+extrShape.lineTo(extrLength,0);
+extrShape.lineTo(0,0)
+const extrudeGeometry = new THREE.ExtrudeGeometry(extrShape);
+const extrMaterial = new THREE.MeshBasicMaterial({color: "DeepPink", wireframe: true});
+const extrude = new THREE.Mesh(extrudeGeometry, extrMaterial);
+scene.add(extrude)
+```
+- the complete structure of how to use and set them is available at [ThreeJs Documentations](https://threejs.org/docs/) .
+
+### Materials
