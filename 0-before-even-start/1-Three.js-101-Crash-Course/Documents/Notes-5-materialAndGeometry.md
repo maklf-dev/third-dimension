@@ -112,3 +112,10 @@ scene.add(extrude)
 - the complete structure of how to use and set them is available at [ThreeJs Documentations](https://threejs.org/docs/) .
 
 ### Materials
+- **Geometry** impacts the shape of the mesh, and **Material** impacts the look of the shape. things like color, shininess, different patterns. also it's important that understand the distinguish between the **Material** and the **Texture**. Texture is part of the material, it's the part that that makes up the way that material ends up looking, it's not the same concept.
+- Material can stands on its own, it does not need texture, it can define the look and feel of the object itself, but you can add a texture to add more information about what could be on the pattern of the material.
+- for example the material of a hand is skin, and a tattoo on it would be texture that defines patterns on it.
+
+![TextureExplanationSample](./imgs/textureExplanation.webp)
+
+- the material defines the skin color, light reflection, how matt it is. 
