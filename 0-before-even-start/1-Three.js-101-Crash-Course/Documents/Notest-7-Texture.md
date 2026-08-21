@@ -64,3 +64,43 @@
             }
         })
 ```
+
+## Loading Texture
+- you can download many different texture and material for free from [PBR materials](https://freepbr.com/) 
+
+- to add a texture to our project, we first need to create a `textureLoader`, after that, we are able to upload as many texture as we wand in our project and use them:
+
+```js
+    // add texture loader
+    const textureLoader = new THREE.TextureLoader()
+
+    // create a texture
+    const textureWall = textureLoader.load('url')
+```
+
+- and after that, we change the `map` method of the material, and set it to out texture:
+```js
+    const textureMaterial = new THREE.MeshBasicMaterial();
+    textureMaterial.map = textureWall;  
+```
+- after that, we can use that texture in out items in the page:
+    - material file:
+
+    ![textureRockSample](./imgs/textureRockSampleFile.png)
+
+    - result in mesh:
+
+    ![textureResultInMesh](./imgs/textureRockResultInMesh.png)
+
+- because in this sample, we use `MeshBasicMaterial`, what ever the main texture image is, will be appear on the item and tere is no response to light or other physical responses. we will change that later.
+
+- as the texture is just part of the material, we still can change methods of the material like color. but it will affect the texture:
+
+    ```js
+    textureMaterial.color = new THREE.Color('gold')
+    ```
+    ![textureWithMaterialColor](./imgs/textureWithMaterialColor.png)
+
+- but we also can change the texture properties it self.
+
+## Texture Properties

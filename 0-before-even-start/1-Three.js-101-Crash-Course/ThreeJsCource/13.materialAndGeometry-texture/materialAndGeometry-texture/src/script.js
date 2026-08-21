@@ -32,7 +32,15 @@ pointLight.position.set(5,5,5)
 scene.add(ambLight);
 scene.add(pointLight);
 
+// add texture loader
+const textureLoader = new THREE.TextureLoader()
+// create a texture
+const textureWall = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_albedo.png')
 
+// add texture to material map
+const textureMaterial = new THREE.MeshBasicMaterial();
+textureMaterial.map = textureWall;
+textureMaterial.color = new THREE.Color('gold')
 
 //create cube, basic material and mesh it to the cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -41,17 +49,15 @@ const planeGeometry = new  THREE.PlaneGeometry(1,1);
 const sphereGeometry = new THREE.SphereGeometry(0.5,32,32);
 const cylinderGeometry= new THREE.CylinderGeometry(0.5,0.5,1,32);
 
-const solidMaterial = new THREE.MeshBasicMaterial({ color: "SlateBlue", wireframe: false });
-
-const cubeMesh = new THREE.Mesh(cubeGeometry, solidMaterial);
-const torusKnotMesh = new THREE.Mesh(torusGeometry, solidMaterial);
-const planeMesh = new THREE.Mesh(planeGeometry, solidMaterial);
+const cubeMesh = new THREE.Mesh(cubeGeometry, textureMaterial);
+const torusKnotMesh = new THREE.Mesh(torusGeometry, textureMaterial);
+const planeMesh = new THREE.Mesh(planeGeometry, textureMaterial);
 const sphere = new THREE.Mesh();
 sphere.geometry = sphereGeometry;
-sphere.material = solidMaterial;
+sphere.material = textureMaterial;
 const cylinderMesh = new THREE.Mesh();
 cylinderMesh.geometry = cylinderGeometry;
-cylinderMesh.material = solidMaterial;
+cylinderMesh.material = textureMaterial;
 
 planeMesh.position.x = 1.5;
 torusKnotMesh.position.x = -1.5;
@@ -75,26 +81,25 @@ camera.updateProjectionMatrix();
 renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-console.log(scene.children)
-
 //creating a render loop for controls and renderer auto updates
 const renderloop = () => {
 
-    //cubeMesh.rotation.y += 0.01 
-    /*scene.children.forEach((child) =>{
-        if(child instanceof THREE.Mesh){
-            child.rotation.y += 0.01;
-        }
-    })*/
-   meshGroup.children.forEach((child) =>{
-        if(child instanceof THREE.Mesh){
-            child.rotation.y += 0.01;
-        }
-    })
+//cubeMesh.rotation.y += 0.01 
+/*scene.children.forEach((child) =>{
+    if(child instanceof THREE.Mesh){
+        child.rotation.y += 0.01;
+    }
+})*/
 
-    controls.update();
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(renderloop);
+    meshGroup.children.forEach((child) =>{
+    if(child instanceof THREE.Mesh){
+        //child.rotation.y += 0.01;
+    }
+})
+
+controls.update();
+renderer.render(scene, camera);
+window.requestAnimationFrame(renderloop);
 };
 
 // calling auto loop to start everything
