@@ -9,9 +9,10 @@ const camera = new THREE.PerspectiveCamera(
 35,
 window.innerWidth / window.innerHeight,
 0.1,
-200
+2000
 );
 camera.position.z = 8;
+camera.position.y = 5;
 
 // getting canvas element and creating renderer with it
 const $canvas = document.querySelector("canvas.threejs");
@@ -35,12 +36,17 @@ scene.add(pointLight);
 // add texture loader
 const textureLoader = new THREE.TextureLoader()
 // create a texture
-const textureWall = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_albedo.png')
+const textureGround = textureLoader.load('/texture/_Rocks_Ground/TH_Rocks_Ground_baseColor.png')
+//textureGround.repeat.set(100,100);
+textureGround.repeat.set(2,2);
+textureGround.wrapS = THREE.MirroredRepeatWrapping;
+textureGround.wrapT = THREE.MirroredRepeatWrapping;
+textureGround.offset.x = 0.5;
 
 // add texture to material map
 const textureMaterial = new THREE.MeshBasicMaterial();
-textureMaterial.map = textureWall;
-textureMaterial.color = new THREE.Color('gold')
+textureMaterial.map = textureGround;
+//textureMaterial.color = new THREE.Color('gold')
 
 //create cube, basic material and mesh it to the cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -64,10 +70,15 @@ torusKnotMesh.position.x = -1.5;
 sphere.position.y = -1.5;
 cylinderMesh.position.y = 1.5
 
+planeMesh.rotation.x = -(Math.PI * 0.5);
+planeMesh.scale.set(10,10);
+
+
 //append the new item to the scene
 //scene.add(cubeMesh, planeMesh, torusKnotMesh, sphere, cylinderMesh);
 const meshGroup = new THREE.Group();
-meshGroup.add(cubeMesh, planeMesh, torusKnotMesh, sphere, cylinderMesh);
+//meshGroup.add(cubeMesh, planeMesh, torusKnotMesh, sphere, cylinderMesh);
+meshGroup.add(planeMesh)
 scene.add(meshGroup)
 
 //setting size and pixel ratio of the renderer
@@ -91,11 +102,11 @@ const renderloop = () => {
     }
 })*/
 
-    meshGroup.children.forEach((child) =>{
-    if(child instanceof THREE.Mesh){
-        //child.rotation.y += 0.01;
-    }
-})
+//     meshGroup.children.forEach((child) =>{
+//     if(child instanceof THREE.Mesh){
+//         child.rotation.y += 0.01;
+//     }
+// })
 
 controls.update();
 renderer.render(scene, camera);
