@@ -107,7 +107,7 @@
 ### Repeat
 - when we add a texture and scale it up, mo matter how high the quality of it is, after zooming enough, it lost quality:
 
-![textureLostQuality](/imgs/textureZoomLostQuality.png)
+![textureLostQuality](./imgs/textureZoomLostQuality.png)
 
 - we can use `.repeat` to prevent this.
 ```js
@@ -115,14 +115,14 @@ textureGround.repeat.set(10,10);
 ```
 - but if we just use this, the texture just placed at the corner of the shape, and stretch to sides:
 
-![textureCornerStretch](/imgs/textureCornerStretch.png)
+![textureCornerStretch](./imgs/textureCornerStretch.png)
 
 - so we use `wrapS` to repeat it in `x-axis`:
 ```js
 textureGround.wrapS = THREE.RepeatWrapping;
 ```
 
-![textureRepeatX](/imgs/textureRepeatX.png)
+![textureRepeatX](./imgs/textureRepeatX.png)
 
 - and use `wrapT` to repeat it in `y-axis`:
 ```js
@@ -135,7 +135,7 @@ textureGround.repeat.set(100,100);
 textureGround.wrapS = THREE.RepeatWrapping;
 textureGround.wrapT = THREE.RepeatWrapping;
 ```
-![textureRepeatBoth](/imgs/textureRepeatBoth.png)
+![textureRepeatBoth](./imgs/textureRepeatBoth.png)
 
 - as seen in the image, the repeat is so obvious, and it's not easy to hide this repetition patters, but we can use other type of wrapping to hide it. like `MirroredRepeatWrapping`:
 
@@ -144,7 +144,7 @@ textureGround.repeat.set(100,100);
 textureGround.wrapS = THREE.MirroredRepeatWrapping;
 textureGround.wrapT = THREE.MirroredRepeatWrapping;
 ```
-![textureMirroredRepeatWrapping](/imgs/textureMirroredRepeatWrapping.png)
+![textureMirroredRepeatWrapping](./imgs/textureMirroredRepeatWrapping.png)
 
 ### offset
 - it change the position of the texture base on the shape:
@@ -152,4 +152,4 @@ textureGround.wrapT = THREE.MirroredRepeatWrapping;
 textureGround.offset.x = 0.5
 ```
 
-![textureOffsetX](/imgs/textureOffsetX.png)
+![textureOffsetX](./imgs/textureOffsetX.png)
