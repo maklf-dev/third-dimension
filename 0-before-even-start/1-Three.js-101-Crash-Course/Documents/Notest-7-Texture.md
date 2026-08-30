@@ -153,3 +153,21 @@ textureGround.offset.x = 0.5
 ```
 
 ![textureOffsetX](./imgs/textureOffsetX.png)
+
+### UV Map
+- as you see, same texture applies differently on each item:
+
+![textureApplies](./imgs/texture-applies.png) 
+
+- **UV Map** is a way to tell 3js how map a texture on an item.
+
+![uvMapGlobe](./imgs/uvMapGlobe.png)
+![uvMapCar](./imgs/uvMapCar.png)
+![uvMapRobot](./imgs/uvMapRobot.png)
+
+- threejs and blender have different default uv map logic. blender opens the item faces, and map one texture to whole of it. but threejs map texture to each face of item, separately:
+
+![threeJsDefaultMap](./imgs/threeJsDefaultMap.png)
+![blenderDefaultMap](./imgs/blenderDefaultMap.png)
+
+### PBR Map
