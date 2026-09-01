@@ -36,18 +36,20 @@ scene.add(pointLight);
 // add texture loader
 const textureLoader = new THREE.TextureLoader();
 // create a texture
-const texture = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_albedo.png');
+const textureAlbedo = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_albedo.png');
 const textureAo = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_ao.png');
 const textureHeight = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_height.png');
 const textureMetalic = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_metallic.png');
-const textureOgl = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_normal-ogl.png');
+const textureNormal = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_normal-ogl.png');
 const textureRoughness = textureLoader.load('/texture/rock-wall-mortar-bl/rock-wall-mortar_roughness.png');
 
-const textureMaterial = new THREE.MeshStandardMaterial();
-textureMaterial.map = texture;
-textureMaterial.aoMap = textureAo;
-textureMaterial.metalnessMap = textureMetalic;
-textureMaterial.roughnessMap = textureRoughness;
+//initial material
+const material = new THREE.MeshStandardMaterial();
+material.map = textureAlbedo;
+material.roughnessMap = textureRoughness;
+material.roughness = 0.1;
+material.metalnessMap = textureMetalic;
+material.metalness = 1;
 
 //create cube, basic material and mesh it to the cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -56,15 +58,15 @@ const planeGeometry = new  THREE.PlaneGeometry(1,1);
 const sphereGeometry = new THREE.SphereGeometry(0.5,32,32);
 const cylinderGeometry= new THREE.CylinderGeometry(0.5,0.5,1,32);
 
-const cubeMesh = new THREE.Mesh(cubeGeometry, textureMaterial);
-const torusKnotMesh = new THREE.Mesh(torusGeometry, textureMaterial);
-const planeMesh = new THREE.Mesh(planeGeometry, textureMaterial);
+const cubeMesh = new THREE.Mesh(cubeGeometry, material);
+const torusKnotMesh = new THREE.Mesh(torusGeometry, material);
+const planeMesh = new THREE.Mesh(planeGeometry, material);
 const sphere = new THREE.Mesh();
 sphere.geometry = sphereGeometry;
-sphere.material = textureMaterial;
+sphere.material = material;
 const cylinderMesh = new THREE.Mesh();
 cylinderMesh.geometry = cylinderGeometry;
-cylinderMesh.material = textureMaterial;
+cylinderMesh.material = material;
 
 planeMesh.position.x = 1.5;
 torusKnotMesh.position.x = -1.5;
