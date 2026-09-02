@@ -46,10 +46,17 @@ const textureRoughness = textureLoader.load('/texture/rock-wall-mortar-bl/rock-w
 //initial material
 const material = new THREE.MeshStandardMaterial();
 material.map = textureAlbedo;
+
 material.roughnessMap = textureRoughness;
 material.roughness = 0.1;
+
 material.metalnessMap = textureMetalic;
 material.metalness = 1;
+
+material.normalMap = textureNormal;
+
+// material.displacementMap = textureHeight;
+// material.displacementScale = 0.02
 
 //create cube, basic material and mesh it to the cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -70,7 +77,8 @@ cylinderMesh.material = material;
 
 planeMesh.position.x = 1.5;
 torusKnotMesh.position.x = -1.5;
-sphere.position.y = -1.5;
+//sphere.position.y = -1.5;
+cubeMesh.position.y = -1.5
 cylinderMesh.position.y = 1.5
 
 //append the new item to the scene
