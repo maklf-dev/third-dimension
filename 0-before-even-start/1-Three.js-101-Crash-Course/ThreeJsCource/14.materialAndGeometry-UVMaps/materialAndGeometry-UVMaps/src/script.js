@@ -51,12 +51,15 @@ material.roughnessMap = textureRoughness;
 material.roughness = 0.1;
 
 material.metalnessMap = textureMetalic;
-material.metalness = 1;
+material.metalness = 3;
 
 material.normalMap = textureNormal;
 
-// material.displacementMap = textureHeight;
-// material.displacementScale = 0.02
+material.aoMap = textureAo;
+material.aoMapIntensity = 1.1
+
+material.displacementMap = textureHeight;
+material.displacementScale = 0.2
 
 //create cube, basic material and mesh it to the cube
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -64,6 +67,18 @@ const torusGeometry = new THREE.TorusKnotGeometry(0.4,0.15,150,55);
 const planeGeometry = new  THREE.PlaneGeometry(1,1);
 const sphereGeometry = new THREE.SphereGeometry(0.5,32,32);
 const cylinderGeometry= new THREE.CylinderGeometry(0.5,0.5,1,32);
+
+//add second set of uv to our geometry for ao map
+const cubeGeometryUv2 = new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
+cubeGeometry.setAttribute('uv2', cubeGeometryUv2);
+const torusGeometryUv2 = new THREE.BufferAttribute(torusGeometry.attributes.uv.array, 2)
+torusGeometry.setAttribute('uv2', torusGeometryUv2);
+const planeGeometryUv2 = new THREE.BufferAttribute(planeGeometry.attributes.uv.array, 2)
+planeGeometry.setAttribute('uv2', planeGeometryUv2);
+const sphereGeometryUv2 = new THREE.BufferAttribute(sphereGeometry.attributes.uv.array, 2)
+sphereGeometry.setAttribute('uv2', sphereGeometryUv2);
+const cylinderGeometryUv2 = new THREE.BufferAttribute(cylinderGeometry.attributes.uv.array, 2)
+cylinderGeometry.setAttribute('uv2', cylinderGeometryUv2);
 
 const cubeMesh = new THREE.Mesh(cubeGeometry, material);
 const torusKnotMesh = new THREE.Mesh(torusGeometry, material);
@@ -75,11 +90,11 @@ const cylinderMesh = new THREE.Mesh();
 cylinderMesh.geometry = cylinderGeometry;
 cylinderMesh.material = material;
 
-planeMesh.position.x = 1.5;
-torusKnotMesh.position.x = -1.5;
+planeMesh.position.x = 10.5;
+torusKnotMesh.position.x = -10.5;
 //sphere.position.y = -1.5;
-cubeMesh.position.y = -1.5
-cylinderMesh.position.y = 1.5
+cubeMesh.position.y = -10.5
+cylinderMesh.position.y = 10.5
 
 //append the new item to the scene
 //scene.add(cubeMesh, planeMesh, torusKnotMesh, sphere, cylinderMesh);
@@ -121,3 +136,4 @@ window.requestAnimationFrame(renderloop);
 
 // calling auto loop to start everything
 renderloop();
+

@@ -122,3 +122,61 @@ material.displacementScale = 0.1
 - remember that these shadows are different from the shadows that cast by other objects within the scene. this shadows are actually **cast by the object on itself**.
 
 ![AmbientOcclusionExample](./imgs/AmbientOcclusionExample.jpg)
+
+- in threejs docs, it says:
+> The red channel of this texture is used as the ambient occlusion map. Requires a **second set of UVs**
+
+- threejs has its own UV map, and it defines how textures are going to map on its own geometries. and this Uv information is actually stored within each geometry:
+
+```js
+    - BoxGeometry:
+        - attributes:
+            - normal
+            - position
+            - uv
+                - array: Float32Array(48) [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, ...]
+                - count : 24
+                - gpuType: 1015
+                - isBufferAttributes: true
+                - itemSize: 2
+                ...
+```
+
+- to create a new set f uv for a geometry, like we create our own position and passed it to the geometry, we should do the same through the **bufferAttribute**, because there is no second set of uvs in geometries, and we have to create one.
+
+- if log the `geometry.attributes.uv.array`, we get this:
+```js
+Float32Array(48) [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, buffer: ArrayBuffer(192), byteLength: 192, byteOffset: 0, length: 48, Symbol(Symbol.toStringTag): 'Float32Array']
+```
+- and we can actually use it to pass it as a second set of uv to our geometry, and because the ao map is 2d, we pass the size `2`:
+
+```js
+const geometryUv2 = new THREE.BufferAttribute(geometry.attributes.uv.array, 2)
+geometry.setAttribute('uv2', geometryUv2);
+```
+- and in this way, we actually copy the geometry own uv.
+- because uv exist in geometry and not mesh, we have to do this for each geometry we have in the scene with ao map.
+
+```js
+const cubeGeometryUv2 = new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
+cubeGeometry.setAttribute('uv2', cubeGeometryUv2);
+const torusGeometryUv2 = new THREE.BufferAttribute(torusGeometry.attributes.uv.array, 2)
+torusGeometry.setAttribute('uv2', torusGeometryUv2);
+const planeGeometryUv2 = new THREE.BufferAttribute(planeGeometry.attributes.uv.array, 2)
+planeGeometry.setAttribute('uv2', planeGeometryUv2);
+const sphereGeometryUv2 = new THREE.BufferAttribute(sphereGeometry.attributes.uv.array, 2)
+sphereGeometry.setAttribute('uv2', sphereGeometryUv2);
+const cylinderGeometryUv2 = new THREE.BufferAttribute(cylinderGeometry.attributes.uv.array, 2)
+cylinderGeometry.setAttribute('uv2', cylinderGeometryUv2);
+```
+
+- after that, we can add our `aoMap` to the material, and set the intensity of it:
+
+```js
+material.aoMap = textureAo;
+material.aoMapIntensity = 1.1
+```
+
+- and this is ho it look without/with aoMap:
+
+![withWitoutAoMap](./imgs/withWitoutAoMap.png)
